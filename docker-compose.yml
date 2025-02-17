@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./BrightBrowse_Backend
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./BrightBrowse_Backend:/app
+      - db_data:/app/db
+    ports:
+      - "8000:8000"
+    # environment:
+    #   - LLM_BASE_URL=http://localhost:8080
+    env_file:
+      - ./BrightBrowse_Backend/.env
+    # depends_on:
+    #   - llm
+
+  # llm:
+  #   build: ./BrightBrowse_LLM
+  #   command: flask run --host=0.0.0.0 --port=8080
+  #   volumes:
+  #     - ./BrightBrowse_LLM:/app
+  #   ports:
+  #     - "8080:8080"
+  #   env_file:
+  #     - ./BrightBrowse_LLM/.env
+
+volumes:
+  db_data:
